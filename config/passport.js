@@ -10,7 +10,7 @@ passport.deserializeUser(function(id, done) {
   User.findOne({_id:id}, function(err, user) {
     done(err, user);
   });
-});
+});+
 
 // local strategy
 passport.use('local-login',
@@ -34,6 +34,16 @@ passport.use('local-login',
             return done(null, false);
           }
         });
+
+        if (user && user.authenticate(password)){
+          return done(null, user);
+        }
+        else {
+          req.flash('username', username);
+          req.flash('errors', {login:'The username or password is incorrect.'});
+          return done(null, false);
+        }
+
     }
   )
 );

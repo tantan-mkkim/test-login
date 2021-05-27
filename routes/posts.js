@@ -5,14 +5,18 @@ var util = require('../util');
 
 // Index
 router.get('/', function(req, res){
+/* DB사용부분 주석처리
   Post.find({})
     .populate('author')
     .sort('-createdAt')
     .exec(function(err, posts){
       if(err) return res.json(err);
       res.render('posts/index', {posts:posts});
-    });
-});
+    });*/
+
+    res.render('posts/loginSuccess');
+
+  });
 
 // New
 router.get('/new', util.isLoggedin, function(req, res){
