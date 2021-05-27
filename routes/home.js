@@ -97,10 +97,9 @@ router.post('/login',
 
       } else {
         //req.flash('username', username);
-        //req.flash('errors', {login:'The username or password is incorrect.'});
-
+        req.flash('errors', {login:'The username or password is incorrect.'});
         res.redirect('/login');
-      }
+       }
     });
 
 
