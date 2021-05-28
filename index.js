@@ -36,8 +36,10 @@ app.use(passport.session());
 
 // Custom Middlewares
 app.use(function(req,res,next){
-  res.locals.isAuthenticated = req.isAuthenticated();
-  res.locals.currentUser = req.user;
+  res.locals.isAuthenticated = req.isAuthenticated(); //req.isAuthenticated()는 passport에서 제공하는 함수, true/false로 return
+  res.locals.currentUser = req.user; //passport에서 추가하는 항목으로 로그인이 되면 session으로 부터 user를 deserialize하여 생성, res.locals에 담겨진 변수는 ejs에서 바로 사용가능
+  //res.locals.isAuthenticated = true;//req.isAuthenticated(); //req.isAuthenticated()는 passport에서 제공하는 함수, true/false로 return
+  //res.locals.currentUser = null;//req.user; //passport에서 추가하는 항목으로 로그인이 되면 session으로 부터 user를 deserialize하여 생성, res.locals에 담겨진 변수는 ejs에서 바로 사용가능
   next();
 });
 
