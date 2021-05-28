@@ -10,7 +10,7 @@ var User = require('../data/users'); // load up the users json data
 
 // serialize & deserialize User
 passport.serializeUser(function (user, done) {
-  done(null, user.username);
+  done(null, user.username); //done() : 인증이 성공하면 passport에게 사용자의 정보를 전달
 });
 passport.deserializeUser(function (id, done) {
   //mongoose db code
@@ -20,7 +20,7 @@ passport.deserializeUser(function (id, done) {
   
   // Write a logic to find this particular user from the json data using username
   fs.readFile('./data/users.json', 'utf8', function (err, result) {
-    if (err) return console.log(err);
+    if (err) return done(err);
 
     console.log('deserializeUser():' + result);
     user = JSON.parse(result);
@@ -46,7 +46,7 @@ passport.use('local-login',
   },
     function (req, username, password, done) { // callback with username and password from our form
 
-      // Write a logic to find this particular user from the json data using username(email)
+      // Write a logic to find this particular user from the json data using username(or email)
       // validate for password
       // If not found or password incorrect return done({});
       // else return done(null, userObject);            
@@ -55,7 +55,7 @@ passport.use('local-login',
 
       fs.readFile('./data/users.json', 'utf8', function (err, userjson) {
 
-          if (err) return done(err);
+          if (err) return done(err); //done() : 인증이 성공하면 passport에게 사용자의 정보를 전달
 
           user = JSON.parse(userjson);
           console.log(user);          
