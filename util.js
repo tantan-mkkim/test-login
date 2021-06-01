@@ -2,6 +2,7 @@ var util = {};
 
 util.parseError = function(errors){
   var parsed = {};
+  if(!errors) return parsed; //kmk error handling //FIXME : delete code?
   if(errors.name == 'ValidationError'){
     for(var name in errors.errors){
       var validationError = errors.errors[name];

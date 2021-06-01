@@ -95,8 +95,7 @@ userSchema.pre('save', function (next){
     return next();
   }
   else {
-    //user.password = bcrypt.hashSync(user.password);
-    user.password = user.password;
+    user.password = bcrypt.hashSync(user.password);
     return next();
   }
 });
@@ -104,8 +103,7 @@ userSchema.pre('save', function (next){
 // model methods
 userSchema.methods.authenticate = function (password) {
   var user = this;
-  //return bcrypt.compareSync(password,user.password);
-  return (password == user.password);
+  return bcrypt.compareSync(password,user.password);
 };
 
 // model & export

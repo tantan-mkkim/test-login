@@ -19,20 +19,21 @@ passport.deserializeUser(function (id, done) {
   // });
   
   // Write a logic to find this particular user from the json data using username
-  fs.readFile('./data/users.json', 'utf8', function (err, result) {
+  fs.readFile('./data/users.json', 'utf8', function (err, userjson) {
     if (err) return done(err);
 
-    console.log('deserializeUser():' + result);
-    user = JSON.parse(result);
+    console.log('deserializeUser():' + userjson);
+    var user = JSON.parse(userjson).members;
 
-    // If not found return done({});
-    // else return done(null, userObject);  
-    if (id != user.name) {
-      return done({}); //done(err,null);?
-    } else {
-      //callback(err, null);
-      return done(null, user);
+    var i = 0;
+    while(i < user.length){
+      if (id == user[i].username)
+        return done(null, user[i]);
+      i++;
     };
+    return done({}); //done(err,null);?
+
+
   });
 });
 
@@ -55,26 +56,28 @@ passport.use('local-login',
 
       fs.readFile('./data/users.json', 'utf8', function (err, userjson) {
 
-          if (err) return done(err); //done() : 인증이 성공하면 passport에게 사용자의 정보를 전달
+        if (err) return done(err); //done() : 인증이 성공하면 passport에게 사용자의 정보를 전달
 
-          user = JSON.parse(userjson);
-          console.log(user);          
-          //if (user && user.authenticate(password)){
-          if (paramUsername == user.username && paramPassword == user.password) {  
-            return done(null, user);
-          }
-          else {
-            req.flash('username', username);
-            req.flash('errors', {login:'The username or password is incorrect.'});
-            return done(null, false);
-          }
-//-----------------------------------------
+        var user = JSON.parse(userjson).members;
+
+        //if (user && user.authenticate(password)){
+        var i = 0;
+        while (i < user.length) {
+          if (paramUsername == user[i].username && paramPassword == user[i].password) {
+            return done(null, user[i]);
+          };
+          i++;
+         };
+        //case of no matched data
+        req.flash('username', paramUsername);
+        req.flash('errors', { login: 'The username or password is incorrect.' });
+        return done(null, false);
       });
     }
   )
 );
 
-var authUser = function(username, password, callback){
+/* var authUser = function(username, password, callback){
 
   fs.readFile('./data/users.json', 'utf8', function (err, result) {
    if (err) return console.log(err);
@@ -87,6 +90,6 @@ var authUser = function(username, password, callback){
      callback(err, null);
    };
  });
-};
+}; */
 
 module.exports = passport;

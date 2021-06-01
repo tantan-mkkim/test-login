@@ -42,7 +42,7 @@ router.post('/login',
       next();
     }
     else {
-      req.flash('errors', errors);
+      req.flash('errors', errors); //req.flash(키,값)으로 해당키에 값을 설정 -> req.flash(키)로 해당 키에 대한 값 가져오기
       res.redirect('/login');
     }
   },

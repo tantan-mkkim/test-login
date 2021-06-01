@@ -1,0 +1,16 @@
+{
+  "members" : [
+    {
+      "username": "admin",
+      "name": "admin",
+      "password": "admin",
+      "email": "tantan.mkkim@gmail.com"
+    },
+    {
+      "username": "kmk0",
+      "name": "kmk0",
+      "password": "kmk00000",
+      "email": ""
+    }
+  ]
+}
