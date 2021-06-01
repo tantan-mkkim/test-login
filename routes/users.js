@@ -27,7 +27,7 @@ router.post('/', function(req, res){ // "/users"에 post 요청이 오는 경우
   // 존재할 경우 error 출력하고 sign up 화면 redirect
   fs.readFile('./data/users.json', 'utf8', function (err, usersjson) {
     
-    //TODO : input data validation check
+    //TODO : input data validation check -> new.ejs
 
 
     var newuser = req.body.username;
@@ -39,7 +39,12 @@ router.post('/', function(req, res){ // "/users"에 post 요청이 오는 경우
     while(i < user.length){
       if(user[i].username == newuser){
         req.flash('user', req.body);
-        //req.flash('errors', util.parseError(err)); //error 발생하여 주석처리 //FIXME
+        
+        //var parsed = {};
+        req.flash('errors', {username:'ValidationError'});
+        //req.flash('errors', { message:'This username already exists!' });
+        //parsed.username = { message:'This username already exists!' };  
+        req.flash('errors', util.parseError(err)); //error 발생하여 주석처리 //FIXME        
         return res.redirect('/users/new');
       };
       i++;
