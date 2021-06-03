@@ -5,10 +5,11 @@ var methodOverride = require('method-override');
 var flash = require('connect-flash'); //일회성 메시지들을 웹 브라우저에 나타낼 때 사용하는 middleware
 var session = require('express-session');
 var passport = require('./config/passport');
+var pool = require('./config/database'); //mysql pool
 var app = express();
 
 // DB setting
-// TODO MYSQL setting
+// TODO: MYSQL setting and mongoose code delete
 mongoose.set('useNewUrlParser', true);
 mongoose.set('useFindAndModify', false);
 mongoose.set('useCreateIndex', true);
@@ -55,4 +56,5 @@ app.use('/users', require('./routes/users'));
 var port = 3000;
 app.listen(port, function(){
   console.log('server on! http://localhost:'+port);
+  //console.log(process.env);
 });

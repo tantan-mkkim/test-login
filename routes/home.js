@@ -2,10 +2,20 @@ var express = require('express');
 //var fs = require('fs');
 var router = express.Router();
 var passport = require('../config/passport');
+var pool = require('../config/database'); //mysql pool
 const { exists } = require('../models/User');
 
 // Home
 router.get('/', function (req, res) {
+  
+  //test code
+  pool.query('SELECT CAM_CODE AS solution FROM t_cam', function (error, results, fields){
+    if (error) throw error;
+    console.log('The solution is: ', results[0].solution);
+    //console.log(pool);
+  });
+  
+  
   res.render('home/welcome');
 });
 router.get('/about', function (req, res) {
