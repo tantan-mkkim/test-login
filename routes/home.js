@@ -7,17 +7,9 @@ const { exists } = require('../models/User');
 
 // Home
 router.get('/', function (req, res) {
-  
-  //test code
-  pool.query('SELECT CAM_CODE AS solution FROM t_cam', function (error, results, fields){
-    if (error) throw error;
-    console.log('The solution is: ', results[0].solution);
-    //console.log(pool);
-  });
-  
-  
   res.render('home/welcome');
 });
+
 router.get('/about', function (req, res) {
   res.render('home/about');
 });
@@ -33,7 +25,7 @@ router.get('/login', function (req, res) {
   });
 });
 
-// Post Login
+// Post Login : form 에 입력한 정보를 post 방식으로 받는 라우터 코드 설정
 router.post('/login',
   function (req, res, next) {
     var errors = {};
@@ -60,48 +52,8 @@ router.post('/login',
    passport.authenticate('local-login', {
      successRedirect : '/posts',
      failureRedirect : '/login'
-   }
-   )
-     /*function (req, res) {
-    var paramId = req.body.username || req.query.username;
-    var paramPassword = req.body.password || req.query.password;
-
-    authUser(paramId, paramPassword, function (err, rows) {
-      if (err) {
-        console.error('Login Error : ' + err.stack);
-        req.flash('errors', errors);
-        res.redirect('/login');
-      }
-
-      if (rows) {
-
-        res.redirect('/posts');
-        // else
-        //     res.render('webi',{user:req.session.user,rows:null});
-
-      } else {
-        //req.flash('username', username);
-        req.flash('errors', {login:'The username or password is incorrect.'});
-        res.redirect('/login');
-       }
-    });
-  }*/
+   })
 );
-
-/*var authUser = function(name, password, callback){
-
-   fs.readFile('./auth.json', 'utf8', function (err, result) {
-    if (err) return console.log(err);
-    
-    console.log(result);
-    user = JSON.parse(result);
-    if (name == user.name && password == user.password) {
-      callback(null, user);
-    } else {
-      callback(err, null);
-    };
-  });
-};*/
 
 // Logout
 router.get('/logout', function (req, res) {

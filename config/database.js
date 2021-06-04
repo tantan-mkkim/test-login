@@ -5,8 +5,8 @@ var util = require('util');
 var pool      =    mysql.createPool({
     connectionLimit : 20, 
     host     : '127.0.0.1', //DB_HOST,
-    user     : 'webi', //DB_USER,
-    password : '7200', //DB_PASSWORD,
+    user     : 'root', //DB_USER,
+    password : 'qltmxk11', //DB_PASSWORD,
     database : 'anpr_center', //DB_DATABASE,
     waitForConnections:true,
     debug    :  false

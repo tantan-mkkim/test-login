@@ -1,3 +1,4 @@
+//TODO: t_member(회원) 의 테이블이 root@localhost 에서만 보임, webi@localhost 에서도 보이도록 테이블권한 수정 필요
 var express = require('express');
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser'); //body-parser module를 bodyPaser 변수에 담음

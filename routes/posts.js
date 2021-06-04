@@ -25,7 +25,7 @@ router.get('/new', util.isLoggedin, function(req, res){
   res.render('posts/new', { post:post, errors:errors });
 });
 
-// create
+// create (회원가입)
 router.post('/', util.isLoggedin, function(req, res){
   req.body.author = req.user._id;
   Post.create(req.body, function(err, post){
@@ -37,6 +37,40 @@ router.post('/', util.isLoggedin, function(req, res){
     res.redirect('/posts');
   });
 });
+
+router.post('/', util.isLoggedin, function(req, res){
+  req.body.author = req.user._id;
+  Post.create(req.body, function(err, post){
+    if(err){
+      req.flash('post', req.body);
+      req.flash('errors', util.parseError(err));
+      return res.redirect('/posts/new');
+    }
+    res.redirect('/posts');
+  });
+});
+
+router.post('/login/register', function (req, res, next) {
+  hasher(
+    { password: req.body.password },
+    function (err, pass, salt, hash) {
+      var user = {
+        authId: 'local:' + req.body.username,
+        username: req.body.username,
+        password: hash,
+        salt: salt
+      };
+      db.query(
+        'INSERT INTO users SET ?',
+        user, 
+        function (err, result) {
+          if (error) throw error;
+          res.redirect('/');
+      });
+    }
+  );
+});
+
 
 // show
 router.get('/:id', function(req, res){
